@@ -15,7 +15,7 @@ class HandDetector():
         self.hands = self.mpHands.Hands()
         self.mpDraw = mp.solutions.drawing_utils
         self.tipIds = [4, 8, 12, 16, 20]
-
+    #hand landmarks
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
@@ -24,7 +24,7 @@ class HandDetector():
                 if draw:
                     self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
-
+    #position of hands
     def findPosition(self, img, handNo=0, draw=True):
         xList = []
         yList = []
@@ -47,7 +47,7 @@ class HandDetector():
             if draw:
                 cv2.rectangle(img, (xmin - 20, ymin - 20), (xmax + 20, ymax + 20), (0, 255, 0), 2)
         return self.lmList, bbox
-
+    #to detect which finger is up
     def fingersUp(self):
         fingers = []
         # print(self.lmList[4][1])
@@ -61,7 +61,7 @@ class HandDetector():
             else:
                 fingers.append(0)
         return fingers
-
+    #distance between two fingers
     def findDistance(self,p1,p2,img,draw=True,r=15,t=3):
         x1,y1=self.lmList[p1][1:]
         x2,y2=self.lmList[p2][1:]
