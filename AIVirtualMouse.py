@@ -34,7 +34,7 @@ while True:
         x2,y2=lmList[12][1:]
         fingers=detector.fingersUp()
         cv2.rectangle(img,(frameR,frameR),(wCam-frameR,hCam-frameR),(255,0,255),2)
-
+        #cursor
         if fingers==[0,1,1,0,0]:
             x3=np.interp(x1,(frameR,wCam-frameR),(0,wScr))
             y3=np.interp(y1,(frameR,hCam-frameR),(0,hScr))
@@ -44,7 +44,7 @@ while True:
             py.moveTo(wScr - clocX, clocY)
             # cv2.circle(img,(x1,y1),15,(255,0,255),cv2.FILLED)
             plocX,plocY=clocX,clocY
-
+        #drag
         if fingers==[0,0,0,0,0]:
             py.mouseDown()
             x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
@@ -54,23 +54,25 @@ while True:
             py.moveTo(wScr - clocX, clocY, duration=0.1)
             plocX, plocY = clocX, clocY
 
-
+        #click operation
         if fingers==[0,0,1,0,0]:
             # length,img,lineInfo=detector.findDistance(8,12,img)
             # if length<40:
             #     cv2.circle(img,(lineInfo[4],lineInfo[5]),15,(0,255,0),cv2.FILLED)
             py.click()
-
+        #right click
         if fingers==[0,1,0,0,0]:
             # length, img, lineInfo = detector.findDistance(4, 8, img)
             # if length<30:
             #     cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0), cv2.FILLED)
             autopy.mouse.click(autopy.mouse.Button.RIGHT)
-
+        #scroll up
         if fingers==[1,1,1,0,0]:
             py.scroll(300)
+        #scroll down    
         if fingers==[0,1,1,1,0]:
             py.scroll(-300)
+        #double click    
         if fingers==[1,1,0,0,0]:
             length, img, lineInfo = detector.findDistance(4, 8, img)
             if length<30:
